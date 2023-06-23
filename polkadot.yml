@@ -1,0 +1,39 @@
+
+- name: Deploy Polkadot binary to nodes
+  hosts: polkadot_nodes
+  become: yes
+  vars: 
+    polkadot_version: "v0.9.39-1"
+    # Comment out original above, uncomment below,
+    # and re-run playbook to update node version. 
+    # polkadot_version: "v0.9.41" 
+
+  tasks:
+    - name: Update and upgrade apt packages
+      apt:
+        update_cache: yes
+        upgrade: yes
+
+    - name: Install necessary packages
+      apt:
+        name:
+          - make
+          - clang
+          - pkg-config
+          - libssl-dev
+          - build-essential
+          - curl
+          - git
+        state: present
+
+    - name: Download Polkadot binary
+      get_url:
+        url: "https://github.com/paritytech/polkadot/releases/download/{{ polkadot_version }}/polkadot"
+        dest: /usr/local/bin/
+        mode: '0755'
+
+    - name: Enable and start Polkadot service
+      systemd:
+        name: polkadot
+        enabled: yes
+        state: started

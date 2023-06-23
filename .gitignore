@@ -1,3 +1,15 @@
+# dotenv environment variables file
+.env
+
+# Ansible .gitignore
+*.retry
+
+# Ansible temporary files
+.ansible/tmp
+
+# Ansible Vault
+.vault_password
+
 # Local .terraform directories
 **/.terraform/*
 
