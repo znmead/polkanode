@@ -1,4 +1,4 @@
-
+--- 
 - name: Deploy Polkadot binary to nodes
   hosts: polkadot_nodes
   become: yes
